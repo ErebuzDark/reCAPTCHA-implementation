@@ -1,0 +1,21 @@
+.roll-image {
+  animation: roll 2s ease-in-out infinite; 
+}
+
+@keyframes roll {
+  0% {
+      transform: translateX(0) rotate(0deg); 
+  }
+  25% {
+      transform: translateX(10px) rotate(15deg);
+  }
+  50% {
+      transform: translateX(0) rotate(0deg); 
+  }
+  75% {
+      transform: translateX(-10px) rotate(-15deg); 
+  }
+  100% {
+      transform: translateX(0) rotate(0deg);
+  }
+}
