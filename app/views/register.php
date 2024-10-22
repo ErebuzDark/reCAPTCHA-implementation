@@ -1,3 +1,9 @@
+<?php
+  session_start();
+  if (isset($_SESSION['user'])) {
+    header('Location: dashboard.php');
+  }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,16 +13,28 @@
   <!-- tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- my customer css -->
+  <!-- my customer css and js-->
   <link rel="stylesheet" href="/IAS_Activity/app/css/logo-swing.css">
   <link rel="stylesheet" href="/IAS_Activity/app/css/bubblemsg.css">
-
+  <script src="../scripts/commons/toastNotification.js"></script>
   <title>Pokekemon | Sign up</title>
 </head>
 <body>
 
   <?php
     include '../includes/header.php';
+  ?>
+
+  <!-- just a toaster message -->
+  <?php
+    if (isset($_SESSION['toast'])) {
+      echo "
+      <script>
+        toast('" . $_SESSION['toast']['title'] . "', '" . $_SESSION['toast']['message'] . "', '" . $_SESSION['toast']['type'] . "');
+      </script>";
+  
+    }
+    unset($_SESSION['toast']);
   ?>
 
   <div class="flex justify-center items-center bg-slate-200 w-full h-[600px] bg-cover bg-center" style="background-image: url('/IAS_Activity/public/images/landing-bg.jpg');">
@@ -29,24 +47,23 @@
       </div>
       <!-- Main body -->
       <div class="px-4 py-6">
-        <form action="../actions/login.process.php" method="POST" id="loginForm">
+        <form action="../actions/register.process.php" method="POST" id="loginForm">
 
           <!-- user name -->
           <div class="flex w-full p-2 gap-2">
             <div class=" flex flex-1 flex-col">
-              <label for="email" class="text-sm font-thin text-slate-700">Enter your Firstname</label>
+              <label for="firstname" class="text-sm font-thin text-slate-700">Enter your Firstname</label>
               <input
                 class="border border-slate-600 p-2 rounded-md"
-                type="email" name="email" id="email" placeholder="Firstname"
+                type="text" name="firstname" id="firstname" placeholder="Firstname" value="<?php if(isset($_GET['firstname'])) {echo $_GET['firstname'];}?>"
                 required
               >
             </div>
             <div class="flex flex-1 flex-col">
-              <label for="email" class="text-sm font-thin text-slate-700">Enter your Lastname</label>
+              <label for="lastname" class="text-sm font-thin text-slate-700">Enter your Lastname</label>
               <input
                 class="border border-slate-600 p-2 rounded-md"
-                type="email" name="email" id="email" placeholder="Lastname"
-                required
+                type="text" name="lastname" id="lastname" placeholder="Lastname" value="<?php if(isset($_GET['lastname'])) {echo $_GET['lastname'];}?>"
               >
             </div>
           </div>
@@ -59,6 +76,7 @@
               type="email" name="email" id="email" placeholder="Email"
               required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
               title="Please enter a valid email address"
+              value="<?php if(isset($_GET['email'])) {echo $_GET['email'];}?>"
             >
           </div>
 
@@ -85,10 +103,10 @@
             </span>
           </div>
           <div class="flex flex-col m-2 relative">
-            <label for="password" class="text-sm font-thin text-slate-700">Confirm Password</label>
+            <label for="confirmPassword" class="text-sm font-thin text-slate-700">Confirm Password</label>
             <input
               class="border border-slate-600 p-2 rounded-md"
-              type="password" name="password" id="confirmPassword" placeholder="Password"
+              type="password" name="confirmPassword" id="confirmPassword" placeholder="Password"
               required minlength="8"
               title="Password must be at least 8 characters"
             >
@@ -128,7 +146,6 @@
     </div>
     <img class="w-[170px] duration-300 hover:scale-105 z-1" src="/IAS_Activity/public/images/char-gif.gif" alt="pikachu">
   </div>
-  
 
 
   <script src="../scripts/registerscript.js"></script>

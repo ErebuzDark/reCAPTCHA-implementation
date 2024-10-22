@@ -2,7 +2,7 @@
 session_start();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // reCAPTCHA verification
-    $recaptcha_secret = ""; //yung secret key
+    $recaptcha_secret = "6LdNzUoqAAAAAMaOfu9u90_rXC87p5mwqq6hRox4"; //yung secret key
     $recaptcha_response = $_POST['g-recaptcha-response'];
 
     // pag verify ng response using json_decode

@@ -1,3 +1,9 @@
+<?phP 
+session_start();
+if (isset($_SESSION['user'])) {
+  header("Location: ./app/views/dashboard.php");
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,7 +33,7 @@
 <div class="bg-cover bg-center h-[500px] md:h-[700px] relative" style="background-image: url('public/images/landing-bg.jpg');">
   <div class="absolute inset-0 bg-black opacity-25"></div>
   <div class="relative flex flex-col">
-    <h1 class="text-center text-[60px] md:text-[70px] lg:text-[120px] text-white font-bold pt-40 leading-[0.7] opacity-80" style="font-family: 'Archivo Black', sans-serif;">
+    <h1 class="text-center text-[60px] md:text-[70px] lg:text-[120px] text-white font-bold pt-40 leading-[0.7] opacity-80 duration-500 hover:opacity-100" style="font-family: 'Archivo Black', sans-serif;">
       POKEKEMON
     </h1>
     <p class="fade-text text-center text-[19px] md:text-[24px] text-white font-thin pt-0 tracking-[8px] md:tracking-[20px] opacity-80">

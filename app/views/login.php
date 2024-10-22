@@ -21,9 +21,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nova+Mono&family=Rubik+Mono+One&display=swap" rel="stylesheet">
 
-  <!-- my custom css -->
+  <!-- my custom css and js -->
   <link rel="stylesheet" href="/IAS_Activity/app/css/logo-swing.css">
   <link rel="stylesheet" href="/IAS_Activity/app/css/bubblemsg.css">
+  <script src="../scripts/commons/toastNotification.js"></script>
 
   <title>Pokekemon | Login</title>
 </head>
@@ -34,9 +35,16 @@
   ?>
 
   <!-- just a toaster message -->
-  <div id="toaster" class="hidden fixed top-5 left-[50%] transform -translate-x-1/2 z-50 bg-red-500 text-white p-4 rounded-lg shadow-lg">
-    <span id="toaster-message"></span>
-  </div>
+  <?php
+    if (isset($_SESSION['toast'])) {
+      echo "
+      <script>
+        toast('" . $_SESSION['toast']['title'] . "', '" . $_SESSION['toast']['message'] . "', '" . $_SESSION['toast']['type'] . "');
+      </script>";
+  
+    }
+    unset($_SESSION['toast']);
+  ?>
 
   <div class="flex justify-center items-center bg-slate-200 w-full h-[600px] bg-cover bg-center" style="background-image: url('/IAS_Activity/public/images/landing-bg.jpg');">
 
@@ -58,6 +66,7 @@
               type="email" name="email" id="email" placeholder="Email"
               required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
               title="Please enter a valid email address"
+              value="<?php if(isset($_GET['email'])){echo $_GET['email'];}?>"
             >
           </div>
           <div class="flex flex-col m-2 relative">
@@ -106,40 +115,6 @@
     </div>
     <img class="w-[200px] duration-300 hover:scale-105 z-1" src="/IAS_Activity/public/images/pika-gif.gif" alt="pikachu">
   </div>
-
-  <!-- para sa toaster animation -->
-  <script>
-    window.onload = function() {
-      const toaster = document.getElementById('toaster');
-      const message = document.getElementById('toaster-message');
-      
-      <?php if (isset($_SESSION['recaptcha_error'])): ?>
-          message.innerText = "<?php echo $_SESSION['recaptcha_error']; ?>";
-          toaster.classList.remove('hidden');
-          toaster.classList.add('transition', 'opacity-100', 'translate-y-0');
-          toaster.classList.add('opacity-0', 'translate-y-5');
-
-          setTimeout(() => {
-              toaster.classList.remove('opacity-0', '-translate-y-5');
-              toaster.classList.add('opacity-100', 'translate-y-0');
-          }, 10);
-
-          // Hide toaster after 3 seconds
-          setTimeout(() => {
-              toaster.classList.remove('opacity-100', 'translate-y-0');
-              toaster.classList.add('opacity-0', '-translate-y-5');
-              
-              // Hide after the animation
-              setTimeout(() => {
-                  toaster.classList.add('hidden');
-              }, 500);
-          }, 3000);
-
-          <?php unset($_SESSION['recaptcha_error']);?>
-      <?php endif; ?>
-    };
-  </script>
-
-  <script src="../scripts/loginscript.js"></script>
+  <script src="../scripts/passwordController.js"></script>
 </body>
 </html>
